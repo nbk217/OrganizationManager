@@ -4,6 +4,7 @@ import com.demo.servlet.CountryServlet;
 import com.demo.servlet.WelcomeServlet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
@@ -21,6 +22,9 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class OrgManagerApplication {
+
+	@Value("${file.upload.size.max}")
+	private Integer fileUploadSizeMax;
 
 //	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -52,7 +56,7 @@ public class OrgManagerApplication {
 	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver multipartResolver() {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-		multipartResolver.setMaxUploadSize(567585);
+		multipartResolver.setMaxUploadSize(fileUploadSizeMax);
 		return multipartResolver;
 
 	}
@@ -66,7 +70,6 @@ public class OrgManagerApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(OrgManagerApplication.class, args);
-
 	}
 
 }

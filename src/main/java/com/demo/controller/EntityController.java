@@ -77,7 +77,7 @@ public class EntityController {
     }
 
     @RequestMapping(value = "/entitydetails", method = RequestMethod.GET)
-    public String showEntityDetails(ModelMap modelMap,@RequestParam int id){
+    public String showEntityDetails(ModelMap modelMap,@RequestParam Long id){
         modelMap.clear();
         Entity entity= entityService.retrieveEntity(id);
         modelMap.addAttribute("entity",entity);
@@ -85,14 +85,14 @@ public class EntityController {
     }
 
     @RequestMapping(value = "/delete-entity", method = RequestMethod.GET)
-    public String deleteEntity(ModelMap model,@RequestParam int id){
+    public String deleteEntity(ModelMap model,@RequestParam Long id){
         entityService.deleteEntity(id);
         model.clear();
         return "redirect:entities";
     }
 
     @RequestMapping(value = "/update-entity", method = RequestMethod.GET)
-    public String updateEntity(ModelMap model,@RequestParam int id){
+    public String updateEntity(ModelMap model,@RequestParam Long id){
         model.clear();
         Entity entity= entityService.retrieveEntity(id);
         model.addAttribute("entity",entity);

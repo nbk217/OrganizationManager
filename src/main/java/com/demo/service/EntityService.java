@@ -29,8 +29,6 @@ import java.util.*;
 @Service
 public class EntityService {
 
-    @Value("${dropbox}")
-    private String dropbox;
     private static List<Entity> entities = new ArrayList<>();
     private static Long entityCount = 3L;
 
@@ -55,47 +53,9 @@ public class EntityService {
 
     public void addEntity(String legalName, String user, String jurisdiction, String formOfOrganization, String legalAddress, String headQSameAsLegal, String headquartersAddress, String registeredAgent, String otherNames, String tags, String notes, String groups, Date incorporationDate, boolean status, Date lastUpdated, MultipartFile file) throws IOException {
         entities.add(new Entity(++entityCount, legalName, user, jurisdiction, formOfOrganization, legalAddress, headQSameAsLegal, headquartersAddress, registeredAgent, otherNames, tags, notes, groups, incorporationDate, status, lastUpdated, file));
-        // TODO fix this file download
-        String path = Paths.get("").toAbsolutePath().toString() + "/" + file.getOriginalFilename();
-        Files.copy(file.getInputStream(), Paths.get(path),
-                StandardCopyOption.REPLACE_EXISTING);
-        saveFileOnDropBox(file);
     }
 
-    private void saveFileOnDropBox(MultipartFile file) {
-
-        RestTemplate restTemplate= new RestTemplate();
-        String url= "https://content.dropboxapi.com/2/files/upload";
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setBearerAuth(dropbox);
-        headers.set("Dropbox-API-Arg", String.format("{" +
-                "    \"path\": \"/abcd/%s\"," +
-                "    \"mode\": \"add\"," +
-                "    \"autorename\": true," +
-                "    \"mute\": false," +
-                "    \"strict_conflict\": false" +
-                "}", file.getOriginalFilename()));
-        HttpEntity<byte[]> httpEntity = null;
-        try {
-            httpEntity = new HttpEntity<byte[]>(
-                    file.getBytes(), headers);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        MappingJackson2HttpMessageConverter converter =
-                new MappingJackson2HttpMessageConverter();
-        converter.setSupportedMediaTypes(Arrays.asList(
-                MediaType.APPLICATION_OCTET_STREAM));
-        restTemplate.getMessageConverters().add(converter);
-
-        restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
-        System.out.println("Done uploading to dropbox");
-    }
-
-    public void deleteEntity(int id) {
+    public void deleteEntity(Long id) {
         Iterator<Entity> iterator = entities.iterator();
         while (iterator.hasNext()) {
             Entity entity = iterator.next();
@@ -105,7 +65,7 @@ public class EntityService {
         }
     }
 
-    public Entity retrieveEntity(int id) {
+    public Entity retrieveEntity(Long id) {
         for (Entity entity : entities) {
             if (entity.getId() == id) {
                 return entity;

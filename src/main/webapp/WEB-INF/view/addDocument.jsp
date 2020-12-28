@@ -2,9 +2,10 @@
 <%@ include file="common/navigation.jspf"%>
 
 <div class="container">
-<h1>Add Ownership </h1>
-<form:form method="post" modelAttribute="document" >
+<h1>Add Document </h1>
+<form:form method="post" modelAttribute="document" enctype="multipart/form-data">
     <form:hidden path="id"/>
+    <form:hidden path="entity.id"/>
     <fieldset class="form-group">
         <form:label path="folder">Folder</form:label>
         <form:input type="text" path="folder" class="form-control" required="required"/>

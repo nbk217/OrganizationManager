@@ -4,7 +4,7 @@
 <div class="container">
 <h1>Add Entity </h1>
 
-<form:form method="post" modelAttribute="entity" enctype="multipart/form-data">
+<form:form method="post" modelAttribute="entity">
     <form:hidden path="id"/>
     <fieldset class="form-group">
         <form:label path="legalName">Legal Name: </form:label>
@@ -22,12 +22,6 @@
         <form:label path="formOfOrganization">Form of Organization </form:label>
         <form:input type="text" path="formOfOrganization" class="form-control" />
         <form:errors path="formOfOrganization" cssClass="text-warning" />
-    </fieldset><br/>
-
-    <fieldset class="form-group" >
-        <form:label path="file">Choose File </form:label>
-        <form:input type="file" path="file" class="form-control"/>
-        <form:errors path="file" cssClass="text-warning" />
     </fieldset><br/>
 
     <fieldset class="form-group">

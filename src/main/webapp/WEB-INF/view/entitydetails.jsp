@@ -38,7 +38,7 @@ ${name}<br/>
          <tr>
                 <td><a  href="/update-entity?id=${entity.id}" class ="btn btn-info">Update</a></td>
                 <td><a  href="/delete-entity?id=${entity.id}" class ="btn btn-danger">Delete</a></td>
-                <td><a  href="/documents-entity?id=${entity.id}" class ="btn btn-secondary">Documents</a></td>
+                <td><a  href="/documents?entityId=${entity.id}" class ="btn btn-secondary">Documents</a></td>
                 <td><a  href="/add-requirement?id=1" class ="btn btn-secondary">Requirements</a></td>
                 <td><a  href="/ownership?type=&active=" class ="btn btn-secondary">Ownership</a></td>
                 <td><a  href="/people-entity?id=${entity.id}" class ="btn btn-secondary">People</a></td>
